@@ -22,11 +22,11 @@ after_script:
   - git add .
   - git commit -m "update by Travis-CI"
   - echo "start"
-  - echo ${GH-PAGES-TOCKEN}
+  - echo ${ghtoken}
   - echo ${GH_REF}
-  - echo GH-PAGES-TOCKEN
+  - echo ghtoken
   - echo GH_REF
-  - git push --force --quiet "https://${GH-PAGES-TOCKEN}@${GH_REF}" master:gh-pages #GH_token就是在travis中设置的token
+  - git push --force --quiet "https://${ghtoken}@${GH_REF}" master:gh-pages #GH_token就是在travis中设置的token
 branches:
   only:
   - master #只监测这个分支，一有动静就开始构建
