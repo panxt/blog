@@ -98,12 +98,16 @@ theme: yelee
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+# deploy:
+#   type: git
+#   repository: git@github.com:panxt/panxt.github.io.git
+#   branch: master
+
 deploy:
   type: git
   repository: git@github.com:panxt/panxt.github.io.git
   branch: master
 
-  
 # deploy:
 #   type: github
 #   repository: https://github.com/panxt/panxt.github.io.git
