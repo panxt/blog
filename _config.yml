@@ -105,8 +105,8 @@ theme: yelee
 
 deploy:
   type: git
-  repository: git@github.com:panxt/panxt.github.io.git
-  branch: master
+  repository: https://github.com/panxt/blog
+  branch: gh-pages
 
 # deploy:
 #   type: github
