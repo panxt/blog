@@ -1,3 +1,8 @@
-# Panxt's Blog
-[![Build Status](https://travis-ci.org/panxt/panxt.github.io.svg?branch=master)](https://travis-ci.org/panxt/panxt.github.io)
+##  Panxt's Blog  
+[![Build Status](https://travis-ci.com/panxt/blog.svg?branch=master)](https://travis-ci.com/github/panxt/blog)
 
+https://travis-ci.com/panxt/blog.svg?branch=master
+
+https://github.com/panxt/blog
+
+https://panxt.github.io/blog/
