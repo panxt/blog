@@ -4,12 +4,12 @@
 
 # Site
 title: panxt's blog
-subtitle: ''
+subtitle: '简简单单'
 description: 'just so so'
-keywords:
+keywords: java ,scala ,bigdata
 author: panxt
 language: zh-CN
-timezone: ''
+timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'

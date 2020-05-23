@@ -80,6 +80,13 @@
             shortname: config.disqus_shortname
           }) %>
     <% } %>
+    <% if (theme.livere){ %>
+      <%- partial('post/livere', {
+          key: post.slug,
+          title: post.title,
+          url: config.url+url_for(post.path)
+        }) %>
+      <% } %>
 <% } %>
 
 <%- partial('_partial/post-nav-button') %>
