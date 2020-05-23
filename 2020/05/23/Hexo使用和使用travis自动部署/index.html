@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="1">
+<meta name="description" content="序言本文没有太过于详细的Hexo及Travis的教程，主要记录一些笔者在用Hexo在GitHub上搭Blog，并使 用Travis自动部署博客过程中的一些记录点和踩的坑，主要还是偏个人为主，末尾会放出搭建博客过程中参考的一些Blog，写的都挺详细，就不用我再赘述了。 问题及解决办法先写遇到的问题及解决方法吧！ 运行hexo d报错出现TypeError [ERR_INVALID_ARG_TYPE]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo使用和使用travis自动部署">
 <meta property="og:url" content="https://panxt.github.io/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="panxt&#39;s blog">
-<meta property="og:description" content="1">
+<meta property="og:description" content="序言本文没有太过于详细的Hexo及Travis的教程，主要记录一些笔者在用Hexo在GitHub上搭Blog，并使 用Travis自动部署博客过程中的一些记录点和踩的坑，主要还是偏个人为主，末尾会放出搭建博客过程中参考的一些Blog，写的都挺详细，就不用我再赘述了。 问题及解决办法先写遇到的问题及解决方法吧！ 运行hexo d报错出现TypeError [ERR_INVALID_ARG_TYPE]">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-23T12:20:54.000Z">
-<meta property="article:modified_time" content="2020-05-23T16:49:56.683Z">
+<meta property="article:modified_time" content="2020-05-23T19:54:38.453Z">
 <meta property="article:author" content="panxt">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="travis">
@@ -316,7 +316,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1>
+        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>本文没有太过于详细的Hexo及Travis的教程，主要记录一些笔者在用Hexo在GitHub上搭Blog，并使 用Travis自动部署博客过程中的一些记录点和踩的坑，主要还是偏个人为主，末尾会放出搭建博客过程中参考的一些Blog，写的都挺详细，就不用我再赘述了。</p>
+<h1 id="问题及解决办法"><a href="#问题及解决办法" class="headerlink" title="问题及解决办法"></a>问题及解决办法</h1><p>先写遇到的问题及解决方法吧！</p>
+<h2 id="运行hexo-d报错"><a href="#运行hexo-d报错" class="headerlink" title="运行hexo d报错"></a>运行hexo d报错</h2><p>出现<code>TypeError [ERR_INVALID_ARG_TYPE]: The &quot;mode&quot; argument must be integer. Received an instance of Object</code>,很可能就是node_js版本问题，注意替换版本就可以了，一般使用lts,这里推荐<code>nvm</code>,是一个node_js的开发环境控制工具;</p>
+
       
     </div>
     
@@ -328,7 +331,7 @@
         <!-- <p><span>文章作者:</span><a href="/" title="回到主页">panxt</a></p> -->
         <p><span>文章作者:</span><a href="/blog/" title="回到主页">panxt</a></p>
         <p><span>发布时间:</span>2020-05-23, 20:20:54</p>
-        <p><span>最后更新:</span>2020-05-23, 16:49:56</p>
+        <p><span>最后更新:</span>2020-05-23, 19:54:38</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/" title="Hexo使用和使用travis自动部署">https://panxt.github.io/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/</a>
             <span class="copy-path" data-clipboard-text="原文: https://panxt.github.io/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/　　作者: panxt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -358,7 +361,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1"><span class="toc-number">1.</span> <span class="toc-text">1</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#序言"><span class="toc-number">1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题及解决办法"><span class="toc-number">2.</span> <span class="toc-text">问题及解决办法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#运行hexo-d报错"><span class="toc-number">2.1.</span> <span class="toc-text">运行hexo d报错</span></a></li></ol></li></ol>
         
     </div>
     <style>
