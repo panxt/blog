@@ -63,7 +63,13 @@
 <% } %>
 
 <% if (!index && post.comments){ %>
-    <% if (theme.duoshuo.on) { %>
+  <% if (theme.livere.on) { %>
+    <%- partial('comments/livere', {
+        key: post.path,
+        title: post.title,
+        url: config.url+url_for(post.path),
+        }) %>
+    <% } else if (theme.duoshuo.on) { %>
       <%- partial('comments/duoshuo', {
           key: post.path,
           title: post.title,
@@ -80,13 +86,6 @@
             shortname: config.disqus_shortname
           }) %>
     <% } %>
-    <% if (theme.livere){ %>
-      <%- partial('post/livere', {
-          key: post.slug,
-          title: post.title,
-          url: config.url+url_for(post.path)
-        }) %>
-      <% } %>
 <% } %>
 
 <%- partial('_partial/post-nav-button') %>
