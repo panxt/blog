@@ -40,7 +40,7 @@ since: 2018
 ## https://github.com/hexojs/hexo-generator-feed
 
 subnav:
-  Email: "15639727428@163.com"
+  Email: "mailto:15639727428@163.com"
   #新浪微博: "sina weibo"
   GitHub: "https://github.com/panxt"
   #V2EX: "#"
