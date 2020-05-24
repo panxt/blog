@@ -190,7 +190,7 @@ friends:
 
 #是否开启“关于我”。
 # aboutme: 专注于前端
-aboutme: true
+aboutme: java,scala,bigdata
 
 # Open link in a new tab | 是否在新窗口打开链接
 ## `global` 0: Set separately, 1: Open all in new 2: Open all in current
@@ -233,7 +233,7 @@ tab_title_change:
 ## https://github.com/PaicHyperionDev/hexo-generator-search
 search: 
   on: true
-  #onload: false
+  onload: false
   ## true: get search.xml file when the page has loaded
   ## false: get the file when search box gets focus
 
