@@ -4,7 +4,7 @@ hexo cl
 
 git add --all
 
-git commit -m"$0"
+git commit -m"$1"
 
 git push
 
