@@ -9,15 +9,15 @@ Yelee: "3.5"
 menu:
   主页: /
   所有文章: /archives/
-  #随笔: /tags/随笔
+  随笔: /tags/随笔
   标签云: /tags/
   关于我: /about/
 
 # Link to your avatar | 填写头像地址
-avatar: /img/avatar.png
+avatar: /img/pan.png
 
 # Small icon of Your site | 站点小图标地址
-favicon: /favicon.png
+favicon: /img/pan.png
 
 # Internationalization | 主题语言
 ## Change Language in SITE's _config.yml | 在站点配置中切换语言
@@ -28,10 +28,10 @@ favicon: /favicon.png
 ## If your site' url is 'http://yoursite.com/blog', set root_url as '/blog/'
 ## 网站若存放在子目录，请按上面格式填写
 ## https://hexo.io/docs/configuration.html#URL
-root_url: 
+root_url: /blog/
 
 # Year of Site Creation | 网站成立年份
-since: 2016
+since: 2018
 
 # Social info. Bar | 社交信息展示
 ## Keep "mailto:" in Email | 设置 Email 时保留 "mailto:"
@@ -40,11 +40,11 @@ since: 2016
 ## https://github.com/hexojs/hexo-generator-feed
 
 subnav:
-  Email: "mailto:123@123.com"
+  Email: "mailto:15639727428@163.com"
   #新浪微博: "sina weibo"
-  GitHub: "#"
+  GitHub: "https://github.com/panxt"
   #V2EX: "#"
-  RSS: "/atom.xml"
+  #RSS: "/atom.xml"
   #知乎: "zhihu"
   #豆瓣: "douban"
   #简书: "jianshu"
@@ -85,7 +85,7 @@ preload_comment: true
 ## false: 当点击评论条等区域时再加载评论模块
 ## false: load comment's section until u click/hover on the bar/icon
 
-show_count: false
+show_count: true
 ## 是否在主页文章标题旁显示评论数（多说、Disqus）
 ## Add comment count after article title
 
@@ -110,6 +110,8 @@ youyan:
   # id 中填写你的友言用户数字ID，注册后进入后台管理即可查看
   # 友言服务在 Web 环境下运行，普通本地环境无法查看，请部署后在线上测试。
 
+livere:
+  on: true
 
 # >>> Style Customisation 样式自定义 <<<
 
@@ -187,8 +189,8 @@ friends:
 #friends: false
 
 #是否开启“关于我”。
-aboutme: 专注于前端
-#aboutme: false
+# aboutme: 专注于前端
+aboutme: java,scala,bigdata
 
 # Open link in a new tab | 是否在新窗口打开链接
 ## `global` 0: Set separately, 1: Open all in new 2: Open all in current
@@ -219,7 +221,7 @@ ie_updater:
 
 # Tab Title Change | 标签页标题切换
 tab_title_change: 
-  on: false
+  on: true
   left_tab_title: '(つェ⊂) 我藏好了哦~ '
   return_tab_title: '(*´∇｀*) 被你发现啦~ '
 
@@ -230,7 +232,7 @@ tab_title_change:
 ## Insatall below plugin to take effect | 使用搜索需先安装对应插件
 ## https://github.com/PaicHyperionDev/hexo-generator-search
 search: 
-  #on: true
+  on: true
   onload: false
   ## true: get search.xml file when the page has loaded
   ## false: get the file when search box gets focus
