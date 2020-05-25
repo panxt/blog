@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>GitHub远程仓库拉取代码合并到本地分支</title>
+      <link href="/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/"/>
+      <url>/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/</url>
+      
+        <content type="html"><![CDATA[<p>暂时记录下三种方式</p><a id="more"></a><h1 id="git-pull：获取最新代码到本地，并自动合并到当前分支"><a href="#git-pull：获取最新代码到本地，并自动合并到当前分支" class="headerlink" title="git pull：获取最新代码到本地，并自动合并到当前分支"></a>git pull：获取最新代码到本地，并自动合并到当前分支</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//查询当前远程的版本</span><br><span class="line">$ git remote -v</span><br><span class="line">//直接拉取并合并最新代码</span><br><span class="line">$ git pull origin master [示例1：拉取远端origin/master分支并合并到当前分支]</span><br><span class="line">$ git pull origin dev [示例2：拉取远端origin/dev分支并合并到当前分支]</span><br></pre></td></tr></table></figure><p><code>有把握时，直接合并</code></p><h1 id="git-fetch-merge-获取最新代码到本地，然后手动合并分支"><a href="#git-fetch-merge-获取最新代码到本地，然后手动合并分支" class="headerlink" title="git fetch + merge: 获取最新代码到本地，然后手动合并分支"></a>git fetch + merge: 获取最新代码到本地，然后手动合并分支</h1><h2 id="需管理临时分支"><a href="#需管理临时分支" class="headerlink" title="需管理临时分支"></a>需管理临时分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//查看当前远程的版本</span><br><span class="line">$ git remote -v </span><br><span class="line">//获取最新代码到本地临时分支(本地当前分支为[branch]，获取的远端的分支为[origin/branch])</span><br><span class="line">$ git fetch origin master:master1  [示例1：在本地建立master1分支，并下载远端的origin/master分支到master1分支中]</span><br><span class="line">$ git fetch origin dev:dev1[示例1：在本地建立dev1分支，并下载远端的origin/dev分支到dev1分支中]</span><br><span class="line">//查看版本差异</span><br><span class="line">$ git diff master1 [示例1：查看本地master1分支与当前分支的版本差异]</span><br><span class="line">$ git diff dev1    [示例2：查看本地dev1分支与当前分支的版本差异]</span><br><span class="line">//合并最新分支到本地分支</span><br><span class="line">$ git merge master1    [示例1：合并本地分支master1到当前分支]</span><br><span class="line">$ git merge dev1   [示例2：合并本地分支dev1到当前分支]</span><br><span class="line">//删除本地临时分支</span><br><span class="line">$ git branch -D master1    [示例1：删除本地分支master1]</span><br><span class="line">$ git branch -D dev1 [示例1：删除本地分支dev1]</span><br></pre></td></tr></table></figure><p><code>有些繁琐，不怎么用</code></p><h1 id="无需管理临时分支"><a href="#无需管理临时分支" class="headerlink" title="无需管理临时分支"></a>无需管理临时分支</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//查询当前远程的版本</span><br><span class="line">$ git remote -v</span><br><span class="line">//获取最新代码到本地(本地当前分支为[branch]，获取的远端的分支为[origin/branch])</span><br><span class="line">$ git fetch origin master  [示例1：获取远端的origin/master分支]</span><br><span class="line">$ git fetch origin dev [示例2：获取远端的origin/dev分支]</span><br><span class="line">//查看版本差异</span><br><span class="line">$ git <span class="built_in">log</span> -p master..origin/master [示例1：查看本地master与远端origin/master的版本差异]</span><br><span class="line">$ git <span class="built_in">log</span> -p dev..origin/dev   [示例2：查看本地dev与远端origin/dev的版本差异]</span><br><span class="line">//合并最新代码到本地分支</span><br><span class="line">$ git merge origin/master  [示例1：合并远端分支origin/master到当前分支]</span><br><span class="line">$ git merge origin/dev [示例2：合并远端分支origin/dev到当前分支]</span><br></pre></td></tr></table></figure><p><code>较常用</code></p><h1 id="相关连接"><a href="#相关连接" class="headerlink" title="相关连接"></a>相关连接</h1><h2 id="待续"><a href="#待续" class="headerlink" title="待续"></a>待续</h2><h2 id="git-rebase-和-merge区别及使用场景"><a href="#git-rebase-和-merge区别及使用场景" class="headerlink" title="git rebase 和 merge区别及使用场景"></a>git rebase 和 merge区别及使用场景</h2><h2 id="git-tag使用场景"><a href="#git-tag使用场景" class="headerlink" title="git tag使用场景"></a>git tag使用场景</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+            <tag> GitHub </tag>
+            
+            <tag> 每日一记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2020-05-24 对当前现状一些想法</title>
       <link href="/blog/2020/05/24/2020-05-24-%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%B0%E7%8A%B6%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/"/>
       <url>/blog/2020/05/24/2020-05-24-%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%B0%E7%8A%B6%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/</url>
