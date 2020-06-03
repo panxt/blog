@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>maven-插件篇:maven-shade-plugin</title>
+      <link href="/blog/2020/06/01/maven-%E6%8F%92%E4%BB%B6%E7%AF%87-maven-shade-plugin/"/>
+      <url>/blog/2020/06/01/maven-%E6%8F%92%E4%BB%B6%E7%AF%87-maven-shade-plugin/</url>
+      
+        <content type="html"><![CDATA[<p>​    </p><a id="more"></a>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> maven </category>
+          
+          <category> maven-plugins </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> maven </tag>
+            
+            <tag> maven-plugins </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>GitHub远程仓库拉取代码合并到本地分支</title>
       <link href="/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/"/>
       <url>/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/</url>
