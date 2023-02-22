@@ -325,10 +325,16 @@
 
 <h1 id="处理办法"><a href="#处理办法" class="headerlink" title="处理办法"></a>处理办法</h1><p>检查配置和路径后，确定实际问题出在 <code>Malformed \uxxxx encoding</code> 这句错误上。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将本地化文件中的 &#39;\&#39; 替换成 &#39;&#x2F;&#39;，即可。</span><br></pre></td></tr></table></figure>
-
+<h1 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">查看当前locale设置</span><br><span class="line"></span><br><span class="line">locale</span><br><span class="line"></span><br><span class="line">查看当前系统所有可用locale</span><br><span class="line"></span><br><span class="line">locale -a</span><br><span class="line"></span><br><span class="line">查看当前系统</span><br><span class="line"></span><br><span class="line">localectl status</span><br></pre></td></tr></table></figure>
+<p>创建/etc/locale.conf文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LANG&#x3D;zh_CN.UTF-8</span><br><span class="line">LC_COLLATE&#x3D;C</span><br><span class="line">LC_TIME&#x3D;en_DK.UTF-8</span><br></pre></td></tr></table></figure>
+<p>source使其生效</p>
 <h1 id="关联问题"><a href="#关联问题" class="headerlink" title="关联问题"></a>关联问题</h1><p><a href="https://stackoverflow.com/questions/12986234/cant-find-bundle-for-base-name-bundle-locale-en-us" target="_blank" rel="noopener">Can’t find bundle for base name /Bundle, locale en_US</a></p>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://stackoverflow.com/questions/17043037/ant-malformed-uxxxx-encoding-in-propertyfile-task" target="_blank" rel="noopener">Malformed \uxxxx encoding in propertyfile task</a></p>
 <p><a href="https://coderanch.com/t/107014/build-tools/Malformed-uxxxx-encoding-error" target="_blank" rel="noopener">Malformed \uxxxx encoding error !!</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1671446" target="_blank" rel="noopener">linux下设置locale</a></p>
+<p><a href="https://blog.csdn.net/shenyuflying/article/details/53244899" target="_blank" rel="noopener">linux中的本地化</a></p>
+<p><a href="https://blog.csdn.net/liaowenxiong/article/details/116399481" target="_blank" rel="noopener">Linux 命令之 localectl – 控制系统的本地化与键盘布局</a></p>
 
       
     </div>
@@ -371,7 +377,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#处理办法"><span class="toc-number">1.</span> <span class="toc-text">处理办法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关联问题"><span class="toc-number">2.</span> <span class="toc-text">关联问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文档"><span class="toc-number">3.</span> <span class="toc-text">参考文档</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#处理办法"><span class="toc-number">1.</span> <span class="toc-text">处理办法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关命令"><span class="toc-number">2.</span> <span class="toc-text">相关命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关联问题"><span class="toc-number">3.</span> <span class="toc-text">关联问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文档"><span class="toc-number">4.</span> <span class="toc-text">参考文档</span></a></li></ol>
         
     </div>
     <style>
