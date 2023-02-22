@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="panxt" />
+
+
+
+<meta name="description" content="序言本文没有太过于详细的Hexo及Travis的教程，主要记录一些笔者在用Hexo在GitHub上搭Blog，并使 用Travis自动部署博客过程中的一些记录点和踩的坑，主要还是偏个人为主，末尾会放出搭建博客过程中参考的一些Blog，写的都挺详细，就不用我再赘述了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo使用和使用travis自动部署">
+<meta property="og:url" content="https://panxt.github.io/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="panxt&#39;s blog">
+<meta property="og:description" content="序言本文没有太过于详细的Hexo及Travis的教程，主要记录一些笔者在用Hexo在GitHub上搭Blog，并使 用Travis自动部署博客过程中的一些记录点和踩的坑，主要还是偏个人为主，末尾会放出搭建博客过程中参考的一些Blog，写的都挺详细，就不用我再赘述了。">
+<meta property="article:published_time" content="2020-05-23T12:20:54.000Z">
+<meta property="article:modified_time" content="2020-05-23T12:20:54.000Z">
+<meta property="article:author" content="panxt">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="travis">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/blog//apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="panxt&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/blog//img/pan.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/blog/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Hexo使用和使用travis自动部署 | panxt&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = /blog/; </script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/blog/" class="profilepic">
+            <img src="/blog//img/pan.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/blog/">panxt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">简简单单</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <!-- <li><a href="/blog//blog/">主页</a></li> -->
+                            <li><a href="/blog/">主页</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/archives/">所有文章</a></li> -->
+                            <li><a href="/blog/archives/">所有文章</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/tags/%E9%9A%8F%E7%AC%94">随笔</a></li> -->
+                            <li><a href="/blog/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/tags/">标签云</a></li> -->
+                            <li><a href="/blog/tags/">标签云</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/about/">关于我</a></li> -->
+                            <li><a href="/blog/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:15639727428@163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/panxt" target="_blank" rel="noopener" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/BUG/" rel="tag">BUG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Range-Query/" rel="tag">Range Query</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/bug/" rel="tag">bug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/github/" rel="tag">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/maven/" rel="tag">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/maven-plugins/" rel="tag">maven-plugins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ssh/" rel="tag">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/travis/" rel="tag">travis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E8%AE%B0/" rel="tag">每日一记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/" target="_blank" rel="noopener">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java,scala,bigdata</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">panxt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/blog/" class="profilepic">
+                <img src="/blog//img/pan.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/blog/" title="回到主页">panxt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">简简单单</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/blog/">主页</a></li>
+                
+                    <li><a href="/blog/archives/">所有文章</a></li>
+                
+                    <li><a href="/blog/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                
+                    <li><a href="/blog/tags/">标签云</a></li>
+                
+                    <li><a href="/blog/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:15639727428@163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/panxt" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Hexo使用和使用travis自动部署" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/" class="article-date">
+      <time datetime="2020-05-23T12:20:54.000Z" itemprop="datePublished">2020-05-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo使用和使用travis自动部署
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/blog/categories/blog/">blog</a><a class="article-category-link" href="/blog/categories/blog/hexo/">hexo</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/hexo/" rel="tag">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/travis/" rel="tag">travis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>本文没有太过于详细的Hexo及Travis的教程，主要记录一些笔者在用Hexo在GitHub上搭Blog，并使 用Travis自动部署博客过程中的一些记录点和踩的坑，主要还是偏个人为主，末尾会放出搭建博客过程中参考的一些Blog，写的都挺详细，就不用我再赘述了。</p>
+<a id="more"></a>
+<h1 id="问题及解决办法"><a href="#问题及解决办法" class="headerlink" title="问题及解决办法"></a>问题及解决办法</h1><p>先写遇到的问题及解决方法吧！</p>
+<h2 id="运行hexo-d报错"><a href="#运行hexo-d报错" class="headerlink" title="运行hexo d报错"></a>运行hexo d报错</h2><p>出现<code>TypeError [ERR_INVALID_ARG_TYPE]: The &quot;mode&quot; argument must be integer. Received an instance of Object</code>,很可能就是node_js版本问题，注意替换版本就可以了，一般使用lts,这里推荐<code>nvm</code>,是一个node_js的开发环境控制工具;</p>
+<h2 id="运行hexo相关命令失败"><a href="#运行hexo相关命令失败" class="headerlink" title="运行hexo相关命令失败"></a>运行hexo相关命令失败</h2><p>按照报错提示运行<code>npm install --save</code>，任然失败，报错为linux软连接失败等相关信息，是因为我的hexo文件夹实在win10下初始化的，然后通过共享文件夹到本机manjaro开发机上进行同步撰写博客，没找到具体原因，猜测大概为底层文件系统原因，最终我的解决方法是在win10 hexo根目录下执行修复命令<code>npm install --save</code>，然后就都恢复了……</p>
+<h2 id="使用yelee主题时-网站在子目录下链接地址错乱"><a href="#使用yelee主题时-网站在子目录下链接地址错乱" class="headerlink" title="使用yelee主题时,网站在子目录下链接地址错乱"></a>使用yelee主题时,网站在子目录下链接地址错乱</h2><p>解决方法:在<a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" rel="noopener">https://github.com/MOxFIVE/hexo-theme-yelee</a>项目下的Issues中有解决 <a href="https://github.com/MOxFIVE/hexo-theme-yelee/issues/171#issuecomment-357471735" target="_blank" rel="noopener">Issues#171</a></p>
+<p>Some suggestions:</p>
+<p>To fix “Tags” and “About me”, change <code>layout/_partial/left-col.ejs</code>, line 73:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- theme.root_url %&gt;&lt;%- url_for(theme.menu[i]) %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">i</span> %&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">+ <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for(theme.menu[i]) %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">i</span> %&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>To fix floating homepage buttons on the left side of the posts, change <code>layout/_partial/post-nav-button.ejs</code>, line 9 and 19:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-home"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line">+ <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for('/') %&gt;"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-home"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>To fix the “Author” link in the copyright section, change <code>layout/_partial/post/nav.ejs</code>, line 4:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">__</span>('<span class="attr">copyright_info.author</span>') %&gt;</span>:<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=theme.author%</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">+ <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">__</span>('<span class="attr">copyright_info.author</span>') %&gt;</span>:<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for('/') %&gt;"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=theme.author%</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>The reason is that the function url_for() has already taken care of the root directory. Read more: <a href="https://hexo.io/docs/helpers.html#url-for" target="_blank" rel="noopener">https://hexo.io/docs/helpers.html#url-for</a></p>
+<p>I’ve so far encountered those errors, but if there are other errors the solutions will be similar. Hope the author’s gonna fix it soon.</p>
+<h2 id="github图标显示问题"><a href="#github图标显示问题" class="headerlink" title="github图标显示问题"></a>github图标显示问题</h2><p>Step 1: 首先下载一个GitHub图标，放在/yelee/source/img/目录下，命名为GitHub.png，注意是GitHub，而不是Github和github；</p>
+<p>Step 2: 接下来删除在<code>/yelee/source/css/_partial/customise/social-icon.styl</code>的46-50行，然后在<code>img-logo</code> = 添加<code>GitHub white 100</code>。</p>
+<p>GitHub white 100 的意思是github添加白色背景且透明度为100，背景可以自行选择</p>
+<h1 id="Travis相关"><a href="#Travis相关" class="headerlink" title="Travis相关"></a>Travis相关</h1><h2 id="注册Travis"><a href="#注册Travis" class="headerlink" title="注册Travis"></a>注册Travis</h2><p>使用github账户登陆即可</p>
+<h2 id="相关设置"><a href="#相关设置" class="headerlink" title="相关设置"></a>相关设置</h2><p>设置监控哪一个仓库<br>设置github的token,并选为不可见,避免安全风险</p>
+<h2 id="最后给出我的-travis-yml文件"><a href="#最后给出我的-travis-yml文件" class="headerlink" title="最后给出我的.travis.yml文件"></a>最后给出我的.travis.yml文件</h2><p>两个都生效,第一个是网上收集的,但我用的是第二个,Hexo官网上的</p>
+<h3 id="第一份"><a href="#第一份" class="headerlink" title="第一份"></a>第一份</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">node_js</span>   <span class="comment">#设置语言</span></span><br><span class="line"><span class="attr">node_js:</span> <span class="string">stable</span>     <span class="comment">#设置相应的版本</span></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">    <span class="attr">directories:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">node_modules</span>    <span class="comment">#据说可以减少travis构建时间</span></span><br><span class="line"><span class="comment"># before_install:</span></span><br><span class="line"><span class="comment">#   - npm install -g hexo</span></span><br><span class="line"><span class="comment">#   - npm install -g hexo-cli</span></span><br><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span>   <span class="comment">#安装hexo及插件</span></span><br><span class="line"><span class="comment"># before_script:</span></span><br><span class="line"><span class="comment">#   - npm install -g mocha</span></span><br><span class="line"><span class="comment">#   - git clone --branch master https://github.com/Longxr/Longxr.github.io.git public</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">cl</span>   <span class="comment">#清除</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">g</span>   <span class="comment">#生成</span></span><br><span class="line"><span class="attr">after_script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">cd</span> <span class="string">./public</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">init</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">user.name</span> <span class="string">"XXX"</span>   <span class="comment">#修改成自己的github用户名</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">user.email</span> <span class="string">"XXX@XXX.com"</span>   <span class="comment">#修改成自己的GitHub邮箱 GH-PAGES-TOCKEN</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">add</span> <span class="string">.</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">commit</span> <span class="string">-m</span> <span class="string">"update by Travis-CI"</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">push</span> <span class="string">--force</span> <span class="string">--quiet</span> <span class="string">"https://$&#123;GH_token&#125;@$&#123;GH_REF&#125;"</span> <span class="string">master:gh-pages</span> <span class="comment">#GH_token就是在travis中设置的token</span></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">master</span> <span class="comment">#只监测这个分支，一有动静就开始构建</span></span><br><span class="line"><span class="attr">env:</span></span><br><span class="line">    <span class="attr">global:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">GH_REF:</span> <span class="string">github.com/XXX/blog.git</span></span><br></pre></td></tr></table></figure>
+<h3 id="第二份"><a href="#第二份" class="headerlink" title="第二份"></a>第二份</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"><span class="attr">node_js:</span> <span class="string">stable</span>  <span class="comment"># use nodejs v10 LTS</span></span><br><span class="line"><span class="attr">cache:</span> <span class="string">npm</span></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span> <span class="comment"># build master branch only</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">generate</span> <span class="comment"># generate static files</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">pages</span></span><br><span class="line">  <span class="attr">skip-cleanup:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">github-token:</span> <span class="string">$ghtoken</span></span><br><span class="line">  <span class="attr">keep-history:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">on:</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">local-dir:</span> <span class="string">public</span></span><br></pre></td></tr></table></figure>
+<h1 id="我的博客仓库"><a href="#我的博客仓库" class="headerlink" title="我的博客仓库"></a>我的博客仓库</h1><p>如有疑问可以访问查看源码:<a href="https://github.com/panxt/blog" target="_blank" rel="noopener">BLOG</a>  </p>
+<h1 id="相关参考"><a href="#相关参考" class="headerlink" title="相关参考"></a>相关参考</h1><p><a href="http://www.isetsuna.com/hexo/install-config/" target="_blank" rel="noopener">Hexo博客系列（二）：安装和配置 | Setsuna’s Blog</a><br><a href="https://www.cnblogs.com/alex21/p/5376578.html" target="_blank" rel="noopener">hexo - 学渣的成长之路 - 博客园</a><br><a href="https://bestzuo.cn/posts/blog-establish.html" target="_blank" rel="noopener">Hexo博客+Next主题深度优化与定制 - Sanarous的博客</a><br><a href="https://blog.ritboy.com/articles/4283262726.html" target="_blank" rel="noopener">使用Travis CI自动部署Hexo博客 | Ritboy’s Blog</a><br><a href="https://longxuan.ren/2017/05/10/Hexo-Travis-CI/" target="_blank" rel="noopener">Hexo使用Travis CI自动化部署 | Longxr’s blog</a><br><a href="https://hexo.io/zh-cn/docs/github-pages" target="_blank" rel="noopener">将 Hexo 部署到 GitHub Pages | Hexo</a>  </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/">Hexo使用和使用travis自动部署</a></p>
+        <!-- <p><span>文章作者:</span><a href="/" title="回到主页">panxt</a></p> -->
+        <p><span>文章作者:</span><a href="/blog/" title="回到主页">panxt</a></p>
+        <p><span>发布时间:</span>2020-05-23, 20:20:54</p>
+        <p><span>最后更新:</span>2020-05-23, 20:20:54</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/" title="Hexo使用和使用travis自动部署">https://panxt.github.io/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://panxt.github.io/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/　　作者: panxt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/blog/2020/05/24/ElasticSearch%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2/">
+                    ElasticSearch中如何进行时间范围查询
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#序言"><span class="toc-number">1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题及解决办法"><span class="toc-number">2.</span> <span class="toc-text">问题及解决办法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#运行hexo-d报错"><span class="toc-number">2.1.</span> <span class="toc-text">运行hexo d报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行hexo相关命令失败"><span class="toc-number">2.2.</span> <span class="toc-text">运行hexo相关命令失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用yelee主题时-网站在子目录下链接地址错乱"><span class="toc-number">2.3.</span> <span class="toc-text">使用yelee主题时,网站在子目录下链接地址错乱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#github图标显示问题"><span class="toc-number">2.4.</span> <span class="toc-text">github图标显示问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Travis相关"><span class="toc-number">3.</span> <span class="toc-text">Travis相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册Travis"><span class="toc-number">3.1.</span> <span class="toc-text">注册Travis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关设置"><span class="toc-number">3.2.</span> <span class="toc-text">相关设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后给出我的-travis-yml文件"><span class="toc-number">3.3.</span> <span class="toc-text">最后给出我的.travis.yml文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一份"><span class="toc-number">3.3.1.</span> <span class="toc-text">第一份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二份"><span class="toc-number">3.3.2.</span> <span class="toc-text">第二份</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#我的博客仓库"><span class="toc-number">4.</span> <span class="toc-text">我的博客仓库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关参考"><span class="toc-number">5.</span> <span class="toc-text">相关参考</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Hexo使用和使用travis自动部署　| panxt's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MDIyMy8yNjcxMw==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/blog/2020/05/24/ElasticSearch%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2/" title="上一篇: ElasticSearch中如何进行时间范围查询">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <!-- <a href="/" title="回到主页"><i class="fa fa-home"></i></a> -->
+            <a href="/blog/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/">Java本地化适配过程中字符导致报错</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">拉取github代码，在已配置ssh密钥，仍需要输入密码--如何处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">rsa host key for github.com has changed and you have requested strict checking.--如何处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/06/01/maven-%E6%8F%92%E4%BB%B6%E7%AF%87-maven-shade-plugin/">maven-插件篇:maven-shade-plugin</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/">GitHub远程仓库拉取代码合并到本地分支</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/24/2020-05-24-%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%B0%E7%8A%B6%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">2020-05-24 对当前现状一些想法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/24/ElasticSearch%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2/">ElasticSearch中如何进行时间范围查询</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/">Hexo使用和使用travis自动部署</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018-2023 panxt
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/blog/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/blog//background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"> -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

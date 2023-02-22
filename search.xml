@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Java本地化适配过程中字符导致报错</title>
+      <link href="/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/"/>
+      <url>/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/</url>
+      
+        <content type="html"><![CDATA[<p>起因在公司测试环境中部署项目服务时，启动服务报错：can’t find bundle for base name message, locale en_US</p><a id="more"></a><h1 id="处理办法"><a href="#处理办法" class="headerlink" title="处理办法"></a>处理办法</h1><p>检查配置和路径后，确定实际问题出在 <code>Malformed \uxxxx encoding</code> 这句错误上。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将本地化文件中的 &#39;\&#39; 替换成 &#39;&#x2F;&#39;，即可。</span><br></pre></td></tr></table></figure><h1 id="关联问题"><a href="#关联问题" class="headerlink" title="关联问题"></a>关联问题</h1><p><a href="https://stackoverflow.com/questions/12986234/cant-find-bundle-for-base-name-bundle-locale-en-us" target="_blank" rel="noopener">Can’t find bundle for base name /Bundle, locale en_US</a></p><h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://stackoverflow.com/questions/17043037/ant-malformed-uxxxx-encoding-in-propertyfile-task" target="_blank" rel="noopener">Malformed \uxxxx encoding in propertyfile task</a></p><p><a href="https://coderanch.com/t/107014/build-tools/Malformed-uxxxx-encoding-error" target="_blank" rel="noopener">Malformed \uxxxx encoding error !!</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> BUG </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>拉取github代码，在已配置ssh密钥，仍需要输入密码--如何处理</title>
+      <link href="/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/"/>
+      <url>/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h1 id="拉取github代码，在已配置ssh密钥，仍需要输入密码"><a href="#拉取github代码，在已配置ssh密钥，仍需要输入密码" class="headerlink" title="拉取github代码，在已配置ssh密钥，仍需要输入密码"></a>拉取github代码，在已配置ssh密钥，仍需要输入密码</h1><a id="more"></a><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>win11 + git + 代理</p><hr><h2 id="测试ssh连接"><a href="#测试ssh连接" class="headerlink" title="测试ssh连接"></a>测试ssh连接</h2><p>输入以下内容</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure><p>结果显示拒绝</p><p><a href="https://docs.github.com/zh/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection" target="_blank" rel="noopener">GITHUB官方参考文档</a></p><hr><h2 id="ssh故障排除"><a href="#ssh故障排除" class="headerlink" title="ssh故障排除"></a>ssh故障排除</h2><p>要测试通过 HTTPS 端口的 SSH 是否可行，请运行以下 SSH 命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T -p 443 git@ssh.github.com</span><br><span class="line">&gt; Hi USERNAME! You&#39;ve successfully authenticated, but GitHub does not</span><br><span class="line">&gt; provide shell access.</span><br></pre></td></tr></table></figure><p><a href="https://docs.github.com/zh/authentication/troubleshooting-ssh/using-ssh-over-the-https-port" target="_blank" rel="noopener">GITHUB官方参考文档</a></p><hr><h2 id="处理方案"><a href="#处理方案" class="headerlink" title="处理方案"></a>处理方案</h2><p>修改或新建<code>~/.ssh/config</code>文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">Hostname ssh.github.com</span><br><span class="line">Port 443</span><br><span class="line">User git</span><br></pre></td></tr></table></figure><p>成功解决</p><hr><h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://learnku.com/devtools/t/72153" target="_blank" rel="noopener">git clone输入密码提示 Permission denied, please try again.</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ssh </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ssh </tag>
+            
+            <tag> github </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>rsa host key for github.com has changed and you have requested strict checking.--如何处理</title>
+      <link href="/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/"/>
+      <url>/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h1 id="github拉取代码时遇到的一些问题"><a href="#github拉取代码时遇到的一些问题" class="headerlink" title="github拉取代码时遇到的一些问题"></a>github拉取代码时遇到的一些问题</h1><p>git pull时报错：rsa host key for github.com has changed and you have requested strict checking.</p><a id="more"></a><hr><h2 id="Method-1-Remove-keys"><a href="#Method-1-Remove-keys" class="headerlink" title="Method 1: Remove keys"></a>Method 1: Remove keys</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -R &lt;server_name&gt;</span><br><span class="line">(or)</span><br><span class="line">ssh-keygen -R &lt;ip_address&gt;</span><br><span class="line"></span><br><span class="line">-R含义：从 known_hosts 文件中删除所有属于 hostname 的密钥</span><br><span class="line">这个选项主要用于删除经过散列的主机(参见 -H 选项)的密钥。</span><br></pre></td></tr></table></figure><h2 id="Method-2-Delete-key-from-home-user-ssh-known-hosts"><a href="#Method-2-Delete-key-from-home-user-ssh-known-hosts" class="headerlink" title="Method 2: Delete key from /home/user/.ssh/known_hosts"></a>Method 2: Delete key from /home/user/.ssh/known_hosts</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;home&#x2F;user&#x2F;.ssh&#x2F;known_hosts +linenumber</span><br><span class="line">dd</span><br><span class="line">wq</span><br></pre></td></tr></table></figure><h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://gist.github.com/fizerkhan/41f9c525db5b3b16bfcb" target="_blank" rel="noopener">RSA Host Key has been changed.</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> bug </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> bug </tag>
+            
+            <tag> ssh </tag>
+            
+            <tag> github </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>maven-插件篇:maven-shade-plugin</title>
+      <link href="/blog/2020/06/01/maven-%E6%8F%92%E4%BB%B6%E7%AF%87-maven-shade-plugin/"/>
+      <url>/blog/2020/06/01/maven-%E6%8F%92%E4%BB%B6%E7%AF%87-maven-shade-plugin/</url>
+      
+        <content type="html"><![CDATA[<p>​    </p><a id="more"></a>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> maven </category>
+          
+          <category> maven-plugins </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> maven </tag>
+            
+            <tag> maven-plugins </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>GitHub远程仓库拉取代码合并到本地分支</title>
+      <link href="/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/"/>
+      <url>/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/</url>
+      
+        <content type="html"><![CDATA[<p>暂时记录下三种方式</p><a id="more"></a><h1 id="git-pull：获取最新代码到本地，并自动合并到当前分支"><a href="#git-pull：获取最新代码到本地，并自动合并到当前分支" class="headerlink" title="git pull：获取最新代码到本地，并自动合并到当前分支"></a>git pull：获取最新代码到本地，并自动合并到当前分支</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//查询当前远程的版本</span><br><span class="line">$ git remote -v</span><br><span class="line">//直接拉取并合并最新代码</span><br><span class="line">$ git pull origin master [示例1：拉取远端origin/master分支并合并到当前分支]</span><br><span class="line">$ git pull origin dev [示例2：拉取远端origin/dev分支并合并到当前分支]</span><br></pre></td></tr></table></figure><p><code>有把握时，直接合并</code></p><h1 id="git-fetch-merge-获取最新代码到本地，然后手动合并分支"><a href="#git-fetch-merge-获取最新代码到本地，然后手动合并分支" class="headerlink" title="git fetch + merge: 获取最新代码到本地，然后手动合并分支"></a>git fetch + merge: 获取最新代码到本地，然后手动合并分支</h1><h2 id="需管理临时分支"><a href="#需管理临时分支" class="headerlink" title="需管理临时分支"></a>需管理临时分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//查看当前远程的版本</span><br><span class="line">$ git remote -v </span><br><span class="line">//获取最新代码到本地临时分支(本地当前分支为[branch]，获取的远端的分支为[origin/branch])</span><br><span class="line">$ git fetch origin master:master1  [示例1：在本地建立master1分支，并下载远端的origin/master分支到master1分支中]</span><br><span class="line">$ git fetch origin dev:dev1[示例1：在本地建立dev1分支，并下载远端的origin/dev分支到dev1分支中]</span><br><span class="line">//查看版本差异</span><br><span class="line">$ git diff master1 [示例1：查看本地master1分支与当前分支的版本差异]</span><br><span class="line">$ git diff dev1    [示例2：查看本地dev1分支与当前分支的版本差异]</span><br><span class="line">//合并最新分支到本地分支</span><br><span class="line">$ git merge master1    [示例1：合并本地分支master1到当前分支]</span><br><span class="line">$ git merge dev1   [示例2：合并本地分支dev1到当前分支]</span><br><span class="line">//删除本地临时分支</span><br><span class="line">$ git branch -D master1    [示例1：删除本地分支master1]</span><br><span class="line">$ git branch -D dev1 [示例1：删除本地分支dev1]</span><br></pre></td></tr></table></figure><p><code>有些繁琐，不怎么用</code></p><h1 id="无需管理临时分支"><a href="#无需管理临时分支" class="headerlink" title="无需管理临时分支"></a>无需管理临时分支</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//查询当前远程的版本</span><br><span class="line">$ git remote -v</span><br><span class="line">//获取最新代码到本地(本地当前分支为[branch]，获取的远端的分支为[origin/branch])</span><br><span class="line">$ git fetch origin master  [示例1：获取远端的origin/master分支]</span><br><span class="line">$ git fetch origin dev [示例2：获取远端的origin/dev分支]</span><br><span class="line">//查看版本差异</span><br><span class="line">$ git <span class="built_in">log</span> -p master..origin/master [示例1：查看本地master与远端origin/master的版本差异]</span><br><span class="line">$ git <span class="built_in">log</span> -p dev..origin/dev   [示例2：查看本地dev与远端origin/dev的版本差异]</span><br><span class="line">//合并最新代码到本地分支</span><br><span class="line">$ git merge origin/master  [示例1：合并远端分支origin/master到当前分支]</span><br><span class="line">$ git merge origin/dev [示例2：合并远端分支origin/dev到当前分支]</span><br></pre></td></tr></table></figure><p><code>较常用</code></p><h1 id="相关连接"><a href="#相关连接" class="headerlink" title="相关连接"></a>相关连接</h1><h2 id="待续"><a href="#待续" class="headerlink" title="待续"></a>待续</h2><h2 id="git-rebase-和-merge区别及使用场景"><a href="#git-rebase-和-merge区别及使用场景" class="headerlink" title="git rebase 和 merge区别及使用场景"></a>git rebase 和 merge区别及使用场景</h2><h2 id="git-tag使用场景"><a href="#git-tag使用场景" class="headerlink" title="git tag使用场景"></a>git tag使用场景</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+            <tag> GitHub </tag>
+            
+            <tag> 每日一记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>2020-05-24 对当前现状一些想法</title>
+      <link href="/blog/2020/05/24/2020-05-24-%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%B0%E7%8A%B6%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/"/>
+      <url>/blog/2020/05/24/2020-05-24-%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%B0%E7%8A%B6%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>简单记录今日所思</p><a id="more"></a><ul><li>河南永城车祸事故</li><li>香港人权法案</li></ul><p>唉~日子还是要过的,但感觉,至少网络上,至少较年轻一代,民怨……</p><hr><p>TEST 2020-05-29 16:29:00</p><hr>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ElasticSearch中如何进行时间范围查询</title>
+      <link href="/blog/2020/05/24/ElasticSearch%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2/"/>
+      <url>/blog/2020/05/24/ElasticSearch%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2/</url>
+      
+        <content type="html"><![CDATA[<p>在开发过程中有需求是对ElasticSearch中对一定时间范围内数据进行查询,完成后做下记录.</p><a id="more"></a><h1 id="数值范围查询"><a href="#数值范围查询" class="headerlink" title="数值范围查询"></a>数值范围查询</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;_search</span><br><span class="line">&#123;</span><br><span class="line">    &quot;query&quot;: &#123;</span><br><span class="line">        &quot;range&quot; : &#123;</span><br><span class="line">            &quot;age&quot; : &#123;</span><br><span class="line">                &quot;gte&quot; : 10,</span><br><span class="line">                &quot;lte&quot; : 20,</span><br><span class="line">                &quot;boost&quot; : 2.0</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="范围查询的符号"><a href="#范围查询的符号" class="headerlink" title="范围查询的符号"></a>范围查询的符号</h1><table><thead><tr><th align="center">符号</th><th align="center">含义</th></tr></thead><tbody><tr><td align="center">gt</td><td align="center">&gt;</td></tr><tr><td align="center">gte</td><td align="center">&gt;=</td></tr><tr><td align="center">lt</td><td align="center">&lt;</td></tr><tr><td align="center">lte</td><td align="center">&lt;=</td></tr></tbody></table><h1 id="时间范围查询"><a href="#时间范围查询" class="headerlink" title="时间范围查询"></a>时间范围查询</h1><p>如果为<code>date</code>类型数据,可以使用<code>data math</code>,如下:</p><h2 id="data-math"><a href="#data-math" class="headerlink" title="data math"></a>data math</h2><p><code>gt</code><br>Rounds up to the first millisecond not covered by the rounded date.<br>For example, 2014-11-18||/M rounds up to 2014-12-01T00:00:00.000, excluding the entire month of November.</p><p><code>gte</code><br>Rounds down to the first millisecond.<br>For example, 2014-11-18||/M rounds down to 2014-11-01T00:00:00.000, including the entire month.</p><p><code>lt</code><br>Rounds down to the last millisecond before the rounded value.<br>For example, 2014-11-18||/M rounds down to 2014-10-31T23:59:59.999, excluding the entire month of November.</p><p><code>lte</code><br>Rounds up to the latest millisecond in the rounding interval.<br>For example, 2014-11-18||/M rounds up to 2014-11-30T23:59:59.999, including the entire month.</p><h2 id="昨天和今天的范围"><a href="#昨天和今天的范围" class="headerlink" title="昨天和今天的范围"></a>昨天和今天的范围</h2><p><code>&quot;gte&quot; : &quot;now-1d/d&quot; //昨天00:00:00</code><br><code>&quot;lt&quot; :  &quot;now/d&quot;        // 今天晚上00:00:00</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;_search</span><br><span class="line">&#123;</span><br><span class="line">    &quot;query&quot;: &#123;</span><br><span class="line">        &quot;range&quot; : &#123;</span><br><span class="line">            &quot;timestamp&quot; : &#123;</span><br><span class="line">                &quot;gte&quot; : &quot;now-1d&#x2F;d&quot;,</span><br><span class="line">                &quot;lt&quot; :  &quot;now&#x2F;d&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="时间公式"><a href="#时间公式" class="headerlink" title="时间公式"></a>时间公式</h2><ul><li><code>+1h</code>: Add one hour//加一小时  </li><li><code>-1d</code>: Subtract one day//减一小时 </li><li><code>/d</code>: Round down to the nearest day//四舍五入到<code>最近</code>一天  </li></ul><table><thead><tr><th align="center">表达式</th><th align="center">含义</th></tr></thead><tbody><tr><td align="center">y</td><td align="center">Years</td></tr><tr><td align="center">M</td><td align="center">Months</td></tr><tr><td align="center">w</td><td align="center">weeks</td></tr><tr><td align="center">d</td><td align="center">Days</td></tr><tr><td align="center">h</td><td align="center">Hours</td></tr><tr><td align="center">H</td><td align="center">Houss</td></tr><tr><td align="center">m</td><td align="center">minutes</td></tr><tr><td align="center">s</td><td align="center">Seconds</td></tr></tbody></table><p>假如当前系统时间为<code>now = 2001-01-01 12:00:00</code>,则<br><code>now+1h</code> =  2001-01-01 13:00:00<br><code>now-1h</code>  =  2001-01-01 11:00:00<br><code>now-1h/d</code>  =  2001-01-01 00:00:00 //毫秒减去一小时,约等于到当天起始<br><code>2001.02.01\|\|+1M/d</code> = 2001-03-01 00:00:00 //毫秒加一个月,再约等于到当天起始     </p><h2 id="时区"><a href="#时区" class="headerlink" title="时区"></a>时区</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;range&quot;: &#123;</span><br><span class="line">      &quot;timestamp&quot;: &#123;</span><br><span class="line">        &quot;time_zone&quot;: &quot;+01:00&quot;,        </span><br><span class="line">        &quot;gte&quot;: &quot;2020-01-01T00:00:00&quot;, </span><br><span class="line">        &quot;lte&quot;: &quot;now&quot;                  </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>时区对<code>now</code>不生效</li></ul><h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h3 id="查今天范围内数据-写法应该为"><a href="#查今天范围内数据-写法应该为" class="headerlink" title="查今天范围内数据,写法应该为"></a>查今天范围内数据,写法应该为</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET index&#x2F;_search</span><br><span class="line">&#123;</span><br><span class="line">    &quot;query&quot;: &#123;</span><br><span class="line">        &quot;range&quot; : &#123;</span><br><span class="line">            &quot;timestamp&quot; : &#123;</span><br><span class="line">                &quot;gte&quot; : &quot;now-1h&#x2F;d&quot;,</span><br><span class="line">                &quot;lt&quot; :  &quot;now&#x2F;d&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-range-query.html#querying-range-fields" target="_blank" rel="noopener">Elasticsearch Reference [7.7] » Query DSL » Term-level queries » Range query</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math" target="_blank" rel="noopener">Elasticsearch Reference [7.7] » REST APIs » API conventions » Common options</a><br><a href="https://www.cnblogs.com/shoufeng/p/11266136.html" target="_blank" rel="noopener">Elasticsearch中如何进行日期(数值)范围查询</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ElasticSearch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ElasticSearch </tag>
+            
+            <tag> Range Query </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hexo使用和使用travis自动部署</title>
+      <link href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/"/>
+      <url>/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>本文没有太过于详细的Hexo及Travis的教程，主要记录一些笔者在用Hexo在GitHub上搭Blog，并使 用Travis自动部署博客过程中的一些记录点和踩的坑，主要还是偏个人为主，末尾会放出搭建博客过程中参考的一些Blog，写的都挺详细，就不用我再赘述了。</p><a id="more"></a><h1 id="问题及解决办法"><a href="#问题及解决办法" class="headerlink" title="问题及解决办法"></a>问题及解决办法</h1><p>先写遇到的问题及解决方法吧！</p><h2 id="运行hexo-d报错"><a href="#运行hexo-d报错" class="headerlink" title="运行hexo d报错"></a>运行hexo d报错</h2><p>出现<code>TypeError [ERR_INVALID_ARG_TYPE]: The &quot;mode&quot; argument must be integer. Received an instance of Object</code>,很可能就是node_js版本问题，注意替换版本就可以了，一般使用lts,这里推荐<code>nvm</code>,是一个node_js的开发环境控制工具;</p><h2 id="运行hexo相关命令失败"><a href="#运行hexo相关命令失败" class="headerlink" title="运行hexo相关命令失败"></a>运行hexo相关命令失败</h2><p>按照报错提示运行<code>npm install --save</code>，任然失败，报错为linux软连接失败等相关信息，是因为我的hexo文件夹实在win10下初始化的，然后通过共享文件夹到本机manjaro开发机上进行同步撰写博客，没找到具体原因，猜测大概为底层文件系统原因，最终我的解决方法是在win10 hexo根目录下执行修复命令<code>npm install --save</code>，然后就都恢复了……</p><h2 id="使用yelee主题时-网站在子目录下链接地址错乱"><a href="#使用yelee主题时-网站在子目录下链接地址错乱" class="headerlink" title="使用yelee主题时,网站在子目录下链接地址错乱"></a>使用yelee主题时,网站在子目录下链接地址错乱</h2><p>解决方法:在<a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" rel="noopener">https://github.com/MOxFIVE/hexo-theme-yelee</a>项目下的Issues中有解决 <a href="https://github.com/MOxFIVE/hexo-theme-yelee/issues/171#issuecomment-357471735" target="_blank" rel="noopener">Issues#171</a></p><p>Some suggestions:</p><p>To fix “Tags” and “About me”, change <code>layout/_partial/left-col.ejs</code>, line 73:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- theme.root_url %&gt;&lt;%- url_for(theme.menu[i]) %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">i</span> %&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">+ <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for(theme.menu[i]) %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">i</span> %&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br></pre></td></tr></table></figure><p>To fix floating homepage buttons on the left side of the posts, change <code>layout/_partial/post-nav-button.ejs</code>, line 9 and 19:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-home"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line">+ <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for('/') %&gt;"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-home"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure><p>To fix the “Author” link in the copyright section, change <code>layout/_partial/post/nav.ejs</code>, line 4:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">__</span>('<span class="attr">copyright_info.author</span>') %&gt;</span>:<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=theme.author%</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">+ <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">__</span>('<span class="attr">copyright_info.author</span>') %&gt;</span>:<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for('/') %&gt;"</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('tooltip.back2home') %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=theme.author%</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure><p>The reason is that the function url_for() has already taken care of the root directory. Read more: <a href="https://hexo.io/docs/helpers.html#url-for" target="_blank" rel="noopener">https://hexo.io/docs/helpers.html#url-for</a></p><p>I’ve so far encountered those errors, but if there are other errors the solutions will be similar. Hope the author’s gonna fix it soon.</p><h2 id="github图标显示问题"><a href="#github图标显示问题" class="headerlink" title="github图标显示问题"></a>github图标显示问题</h2><p>Step 1: 首先下载一个GitHub图标，放在/yelee/source/img/目录下，命名为GitHub.png，注意是GitHub，而不是Github和github；</p><p>Step 2: 接下来删除在<code>/yelee/source/css/_partial/customise/social-icon.styl</code>的46-50行，然后在<code>img-logo</code> = 添加<code>GitHub white 100</code>。</p><p>GitHub white 100 的意思是github添加白色背景且透明度为100，背景可以自行选择</p><h1 id="Travis相关"><a href="#Travis相关" class="headerlink" title="Travis相关"></a>Travis相关</h1><h2 id="注册Travis"><a href="#注册Travis" class="headerlink" title="注册Travis"></a>注册Travis</h2><p>使用github账户登陆即可</p><h2 id="相关设置"><a href="#相关设置" class="headerlink" title="相关设置"></a>相关设置</h2><p>设置监控哪一个仓库<br>设置github的token,并选为不可见,避免安全风险</p><h2 id="最后给出我的-travis-yml文件"><a href="#最后给出我的-travis-yml文件" class="headerlink" title="最后给出我的.travis.yml文件"></a>最后给出我的.travis.yml文件</h2><p>两个都生效,第一个是网上收集的,但我用的是第二个,Hexo官网上的</p><h3 id="第一份"><a href="#第一份" class="headerlink" title="第一份"></a>第一份</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">node_js</span>   <span class="comment">#设置语言</span></span><br><span class="line"><span class="attr">node_js:</span> <span class="string">stable</span>     <span class="comment">#设置相应的版本</span></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">    <span class="attr">directories:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">node_modules</span>    <span class="comment">#据说可以减少travis构建时间</span></span><br><span class="line"><span class="comment"># before_install:</span></span><br><span class="line"><span class="comment">#   - npm install -g hexo</span></span><br><span class="line"><span class="comment">#   - npm install -g hexo-cli</span></span><br><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span>   <span class="comment">#安装hexo及插件</span></span><br><span class="line"><span class="comment"># before_script:</span></span><br><span class="line"><span class="comment">#   - npm install -g mocha</span></span><br><span class="line"><span class="comment">#   - git clone --branch master https://github.com/Longxr/Longxr.github.io.git public</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">cl</span>   <span class="comment">#清除</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">g</span>   <span class="comment">#生成</span></span><br><span class="line"><span class="attr">after_script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">cd</span> <span class="string">./public</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">init</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">user.name</span> <span class="string">"XXX"</span>   <span class="comment">#修改成自己的github用户名</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">user.email</span> <span class="string">"XXX@XXX.com"</span>   <span class="comment">#修改成自己的GitHub邮箱 GH-PAGES-TOCKEN</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">add</span> <span class="string">.</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">commit</span> <span class="string">-m</span> <span class="string">"update by Travis-CI"</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">push</span> <span class="string">--force</span> <span class="string">--quiet</span> <span class="string">"https://$&#123;GH_token&#125;@$&#123;GH_REF&#125;"</span> <span class="string">master:gh-pages</span> <span class="comment">#GH_token就是在travis中设置的token</span></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">master</span> <span class="comment">#只监测这个分支，一有动静就开始构建</span></span><br><span class="line"><span class="attr">env:</span></span><br><span class="line">    <span class="attr">global:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">GH_REF:</span> <span class="string">github.com/XXX/blog.git</span></span><br></pre></td></tr></table></figure><h3 id="第二份"><a href="#第二份" class="headerlink" title="第二份"></a>第二份</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"><span class="attr">node_js:</span> <span class="string">stable</span>  <span class="comment"># use nodejs v10 LTS</span></span><br><span class="line"><span class="attr">cache:</span> <span class="string">npm</span></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span> <span class="comment"># build master branch only</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">generate</span> <span class="comment"># generate static files</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">pages</span></span><br><span class="line">  <span class="attr">skip-cleanup:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">github-token:</span> <span class="string">$ghtoken</span></span><br><span class="line">  <span class="attr">keep-history:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">on:</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">local-dir:</span> <span class="string">public</span></span><br></pre></td></tr></table></figure><h1 id="我的博客仓库"><a href="#我的博客仓库" class="headerlink" title="我的博客仓库"></a>我的博客仓库</h1><p>如有疑问可以访问查看源码:<a href="https://github.com/panxt/blog" target="_blank" rel="noopener">BLOG</a>  </p><h1 id="相关参考"><a href="#相关参考" class="headerlink" title="相关参考"></a>相关参考</h1><p><a href="http://www.isetsuna.com/hexo/install-config/" target="_blank" rel="noopener">Hexo博客系列（二）：安装和配置 | Setsuna’s Blog</a><br><a href="https://www.cnblogs.com/alex21/p/5376578.html" target="_blank" rel="noopener">hexo - 学渣的成长之路 - 博客园</a><br><a href="https://bestzuo.cn/posts/blog-establish.html" target="_blank" rel="noopener">Hexo博客+Next主题深度优化与定制 - Sanarous的博客</a><br><a href="https://blog.ritboy.com/articles/4283262726.html" target="_blank" rel="noopener">使用Travis CI自动部署Hexo博客 | Ritboy’s Blog</a><br><a href="https://longxuan.ren/2017/05/10/Hexo-Travis-CI/" target="_blank" rel="noopener">Hexo使用Travis CI自动化部署 | Longxr’s blog</a><br><a href="https://hexo.io/zh-cn/docs/github-pages" target="_blank" rel="noopener">将 Hexo 部署到 GitHub Pages | Hexo</a>  </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> blog </category>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> travis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
