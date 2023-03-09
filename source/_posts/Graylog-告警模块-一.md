@@ -72,6 +72,7 @@ public interface Job {
                     // When the execution engine returned false, there are either no free worker threads or no
                     // runnable triggers. To avoid busy spinning we sleep for the configured duration or until
                     // we receive a job completion event via the scheduler event bus.
+                    // 没有工作线程可用时，进行睡眠，避免busy spinning，CPU空转，造成CPU资源极大浪费。
                     if (sleeper.sleep(loopSleepDuration.getQuantity(), loopSleepDuration.getUnit())) {
                         LOG.debug("Waited for {} {} because there are either no free worker threads or no runnable triggers",
                                     loopSleepDuration.getQuantity(), loopSleepDuration.getUnit());
@@ -87,4 +88,54 @@ public interface Job {
     }
 ```
 
+自定义中断器，在不中断线程的情况下模拟睡眠，原理是利用了AQS底层的自旋锁，避免频繁让出和获取CPU造成线程上下文频繁切换，降低系统性能。
 
+```java
+/**
+     * This class provides a sleep method that can be interrupted without interrupting threads.
+     * The same could be achieved by using a {@link CountDownLatch} but that one cannot be reused and we would need
+     * to create new latch objects all the time. This implementation is using a {@link Semaphore} internally which
+     * can be reused.
+     */
+    @VisibleForTesting
+    static class InterruptibleSleeper {
+
+        private final Semaphore semaphore;
+
+        InterruptibleSleeper() {
+            this(new Semaphore(1));
+        }
+
+        @VisibleForTesting
+        InterruptibleSleeper(Semaphore semaphore) {
+            this.semaphore = semaphore;
+        }
+
+        /**
+         * Blocks for the given duration or until interrupted via {@link #interrupt()}.
+         *
+         * @param duration the duration to sleep
+         * @param unit     the duration unit
+         * @return true if slept for the given duration, false if interrupted
+         * @throws InterruptedException if the thread gets interrupted
+         */
+        public boolean sleep(long duration, TimeUnit unit) throws InterruptedException {
+            // First we have to drain all available permits because interrupt() might get called very often and thus
+            // there might be a lot of permits.
+            semaphore.drainPermits();
+            // Now try to acquire a permit. This won't work except #interrupt() got called in the meantime.
+            // It waits for the given duration, basically emulating a sleep.
+            return !semaphore.tryAcquire(duration, unit);
+        }
+
+        /**
+         * Interrupt a {@link #sleep(long, TimeUnit)} call so it unblocks.
+         */
+        public void interrupt() {
+            // Attention: this will increase available permits every time it's called.
+            semaphore.release();
+        }
+    }
+```
+
+3、
