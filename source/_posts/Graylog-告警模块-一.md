@@ -59,6 +59,7 @@ public interface Job {
         while (isRunning()) {
             // 配置文件进行配置是否允不同节点进行执行
             if (!schedulerConfig.canExecute()) {
+                // 仅在canExecute()状态转变后进行日志提示输出
                 executionEnabled = logExecutionConfigState(executionEnabled, false);
                 clock.sleepUninterruptibly(1, TimeUnit.SECONDS);
                 continue;
@@ -146,4 +147,4 @@ Busy spinning是一种CPU密集型的等待机制，也称为忙等待。当程�
     }
 ```
 
-3、
+3、JobExecutionEngine执行引擎检查可运行的触发器，并在给定的工作线程池中启动作业执行。
