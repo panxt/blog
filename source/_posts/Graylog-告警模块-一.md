@@ -148,3 +148,44 @@ Busy spinning是一种CPU密集型的等待机制，也称为忙等待。当程�
 ```
 
 3、JobExecutionEngine执行引擎检查可运行的触发器，并在给定的工作线程池中启动作业执行。
+
+```java
+/**
+     * Execute the engine. This will try to lock a trigger and execute the job if there are free slots in the
+     * worker pool and the engine is not shutting down.
+     *
+     * @return true if a job trigger has been locked and the related job has been triggered, false otherwise
+     */
+    public boolean execute() {
+        // Cleanup stale scheduler state *before* processing any triggers for the first time.
+        // This is a no-op after the first invocation.
+        // 每次启动之前，会修改当前节点在数据库中的处于running状态的触发器状态，使其置于runnable状态。
+        if (shouldCleanup.get()) {
+            cleanup();
+        }
+        // We want to avoid a call to the database if there are no free slots in the pool or the engine is shutting down
+        // 判断执行条件
+        if (isRunning.get() && workerPool.hasFreeSlots()) {
+            // 按照FIELD_NEXT_TIME顺序，获取未被上锁或已上锁但锁超过5min超时时间(默认)的触发器。
+            final Optional<JobTriggerDto> triggerOptional = jobTriggerService.nextRunnableTrigger();
+
+            if (triggerOptional.isPresent()) {
+                final JobTriggerDto trigger = triggerOptional.get();
+                // 线程池执行触发器任务
+                if (!workerPool.execute(() -> handleTrigger(trigger))) {
+                    // The job couldn't be executed so we have to release the trigger again with the same nextTime
+                    // 此触发器无法执行时，更新nextTime并把触发器释放。
+                    jobTriggerService.releaseTrigger(trigger, JobTriggerUpdate.withNextTime(trigger.nextTime()));
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+```
+
+4、DBJobTriggerService控制任务触发器的服务，使用MongoDB作为分布式锁。
+
+6、JobWorkerPool为告警引擎使用的线程池。
+
