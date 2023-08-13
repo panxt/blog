@@ -1,5 +1,5 @@
 ---
-title: 'Graylog:告警模块(一)'
+title: Graylog源码解析(1)-任务调度模块详解
 date: 2023-03-06 21:49:46
 updated: 2023-03-06 21:49:46
 tags:
@@ -10,7 +10,7 @@ categories:
     - [Graylog]
 comments:
 ---
-告警模块是SIEM产品中重要的模块，下文将在源码层面解析在Graylog中是如何实现此模块的。
+告警模块是SIEM产品中重要的模块，下文将在源码层面解析在Graylog中实现此模块的任务调度模块的实现细节。
 <!-- more -->
 1、Graylog系统中的任务均实现于Job接口，此接口如下，包含一个工厂方法模式接口和任务执行动作。
 
@@ -69,6 +69,8 @@ public interface Job {
             LOG.debug("Starting scheduler loop iteration");
             try {
                 // 核心调度方法
+                // jobExecutionEngine.execute()此方法是多个节点能否分布式执行任务的关键实现，开源版本Graylog默认只有主节点能执行任务，
+                // 如果自己想基于开源版本实现分布式执行任务，需要修改此方法的实现。
                 if (!jobExecutionEngine.execute() && isRunning()) {
                     // When the execution engine returned false, there are either no free worker threads or no
                     // runnable triggers. To avoid busy spinning we sleep for the configured duration or until
@@ -501,3 +503,7 @@ Job执行线程池核心方法：
 - `SynchronousQueue` 的主要特性是无法存储元素，因此插入操作必须等待相应的取出操作，反之亦然。这可能会导致一些线程阻塞，需要谨慎使用，以免造成死锁。
 
 总之，`SynchronousQueue` 在需要高效地传递任务或线程之间的同步协作时非常有用。但由于其特殊的特性，需要在合适的场景中使用，以确保不会导致线程阻塞或死锁。
+
+6、总结。
+
+以上就是Graylog的任务调度机制实现细节，Graylog原生有两种子类继承Job类，一个是`EventProcessorExecutionJob`Graylog的告警模块，另一个是`EventNotificationExecutionJob`Graylog的通知模块。

@@ -6,10 +6,11 @@ tags:
 categories:
 comments:
 ---
-<!-- more -->
-## 什么是Java SPI
-SPI（Service Provider Interface）机制是Java提供的一种服务发现机制，它允许第三方为某个接口创建实现，并将实现放在classpath下的META-INF/services目录中，由接口的提供方在运行时动态加载实现。
 
+## 什么是Java SPI
+
+SPI（Service Provider Interface）机制是Java提供的一种服务发现机制，它允许第三方为某个接口创建实现，并将实现放在classpath下的META-INF/services目录中，由接口的提供方在运行时动态加载实现。
+<!-- more -->
 SPI机制的实现步骤如下：
 
 1. 定义接口：首先需要定义一个接口，该接口的实现类将会被动态加载。
@@ -34,7 +35,7 @@ public interface MyService {
 }
 ```
 
-2. 创建服务提供者
+2.创建服务提供者
 
 接下来需要创建一个或多个服务提供者，实现上述服务接口，例如：
 
@@ -52,16 +53,16 @@ public class MyServiceImpl2 implements MyService {
 }
 ```
 
-3. 创建服务提供者配置文件
+3.创建服务提供者配置文件
 
 在classpath下创建一个名为 `META-INF/services` 的目录，在该目录下创建一个以服务接口全限定名为文件名的文件，例如：`META-INF/services/com.example.MyService`，文件内容为服务提供者的全限定名，例如：
 
-```
+```java
 com.example.MyServiceImpl1
 com.example.MyServiceImpl2
 ```
 
-4. 加载服务提供者
+4.加载服务提供者
 
 使用 `ServiceLoader` 类加载服务提供者，例如：
 
@@ -69,7 +70,7 @@ com.example.MyServiceImpl2
 ServiceLoader<MyService> loader = ServiceLoader.load(MyService.class);
 ```
 
-5. 使用服务提供者
+5.使用服务提供者
 
 使用 `ServiceLoader` 类的 `iterator()` 方法获取服务提供者的迭代器，然后遍历迭代器获取服务提供者的实例，例如：
 
@@ -81,7 +82,7 @@ for (MyService myService : loader) {
 
 上述代码会依次输出：
 
-```
+```java
 MyServiceImpl1 doSomething
 MyServiceImpl2 doSomething
 ```
@@ -91,6 +92,7 @@ MyServiceImpl2 doSomething
 需要注意的是，SPI机制要求服务接口和服务提供者实现类都必须是公共的，并且服务提供者的实现类必须有一个无参构造函数。
 
 ## JDK中的SPI使用
+
 JDK中有很多地方使用了SPI，以下是一些例子：
 
 1. JDBC驱动：JDBC规范定义了一种SPI机制，允许开发人员编写自己的JDBC驱动程序。JDBC驱动程序必须实现java.sql.Driver接口，同时还需要在META-INF/services目录下提供一个名为java.sql.Driver的文件，文件内容为该驱动程序的实现类名。
@@ -104,6 +106,7 @@ JDK中有很多地方使用了SPI，以下是一些例子：
 5. Java NIO中的SelectorProvider：SelectorProvider是一个抽象类，用于提供Selector的实现。在Java NIO中，可以通过SelectorProvider.provider()方法获取系统默认的SelectorProvider实例。不同的操作系统平台会提供不同的SelectorProvider实现，因此SelectorProvider的具体实现类是通过SPI机制加载的。
 
 ## JAVA SPI的底层实现原理
+
 在JDK中，Java SPI的实现方式主要是通过`ServiceLoader`类实现的。它是一个用于加载服务实现类的工具类，它的实现方式主要包括以下几个方面：
 
 1. 根据接口名称从META-INF/services目录下加载配置文件。
@@ -120,7 +123,7 @@ JDK中有很多地方使用了SPI，以下是一些例子：
 
 在Java SPI机制中，每个服务提供者都必须提供一个配置文件，该配置文件的名称为“接口全限定名”，位于META-INF/services目录下。例如，如果我们要使用JDBC的Driver接口，那么对应的配置文件就是META-INF/services/java.sql.Driver。
 
-2. 解析配置文件，获取实现类的全限定名。
+2.解析配置文件，获取实现类的全限定名。
 
 在解析配置文件时，ServiceLoader类会读取该文件的每一行，每行内容为一个实现类的全限定名。例如，如果我们要使用JDBC的Driver接口，那么对应的配置文件内容可能如下所示：
 
@@ -129,11 +132,11 @@ com.mysql.jdbc.Driver
 org.postgresql.Driver
 ```
 
-3. 使用反射机制创建实现类的实例。
+3.使用反射机制创建实现类的实例。
 
 在获取到实现类的全限定名后，ServiceLoader类会使用反射机制创建该实现类的实例。
 
-4. 将实例缓存起来，避免重复创建。
+4.将实例缓存起来，避免重复创建。
 
 为了避免重复创建实例，ServiceLoader类会将创建的实例缓存起来，下次再需要该实例时，直接返回缓存中的实例。
 
