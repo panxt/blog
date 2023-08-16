@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="panxt" />
+
+
+
+<meta name="description" content="什么是Java SPISPI（Service Provider Interface）机制是Java提供的一种服务发现机制，它允许第三方为某个接口创建实现，并将实现放在classpath下的META-INF&#x2F;services目录中，由接口的提供方在运行时动态加载实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA SPI机制详解">
+<meta property="og:url" content="https://panxt.github.io/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="panxt&#39;s blog">
+<meta property="og:description" content="什么是Java SPISPI（Service Provider Interface）机制是Java提供的一种服务发现机制，它允许第三方为某个接口创建实现，并将实现放在classpath下的META-INF&#x2F;services目录中，由接口的提供方在运行时动态加载实现。">
+<meta property="article:published_time" content="2023-03-13T21:59:14.000Z">
+<meta property="article:modified_time" content="2023-03-13T21:59:14.000Z">
+<meta property="article:author" content="panxt">
+<meta property="article:tag" content="java ">
+<meta property="article:tag" content="scala ">
+<meta property="article:tag" content="bigdata">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/blog//apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="panxt&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/blog//img/pan.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/blog/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>JAVA SPI机制详解 | panxt&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = /blog/; </script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/blog/" class="profilepic">
+            <img src="/blog//img/pan.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/blog/">panxt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">简简单单</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <!-- <li><a href="/blog//blog/">主页</a></li> -->
+                            <li><a href="/blog/">主页</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/archives/">所有文章</a></li> -->
+                            <li><a href="/blog/archives/">所有文章</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/tags/%E9%9A%8F%E7%AC%94">随笔</a></li> -->
+                            <li><a href="/blog/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/tags/">标签云</a></li> -->
+                            <li><a href="/blog/tags/">标签云</a></li>
+                        
+                            <!-- <li><a href="/blog//blog/about/">关于我</a></li> -->
+                            <li><a href="/blog/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:15639727428@163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/panxt" target="_blank" rel="noopener" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/BUG/" rel="tag">BUG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Graylog/" rel="tag">Graylog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Range-Query/" rel="tag">Range Query</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/bug/" rel="tag">bug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/github/" rel="tag">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/maven/" rel="tag">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/maven-plugins/" rel="tag">maven-plugins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ssh/" rel="tag">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/travis/" rel="tag">travis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E5%91%8A%E8%AD%A6/" rel="tag">告警</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" rel="tag">工厂模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E8%AE%B0/" rel="tag">每日一记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/" target="_blank" rel="noopener">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">java,scala,bigdata</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">panxt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/blog/" class="profilepic">
+                <img src="/blog//img/pan.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/blog/" title="回到主页">panxt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">简简单单</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/blog/">主页</a></li>
+                
+                    <li><a href="/blog/archives/">所有文章</a></li>
+                
+                    <li><a href="/blog/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                
+                    <li><a href="/blog/tags/">标签云</a></li>
+                
+                    <li><a href="/blog/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:15639727428@163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/panxt" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-JAVA-SPI机制详解" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/" class="article-date">
+      <time datetime="2023-03-13T21:59:14.000Z" itemprop="datePublished">2023-03-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JAVA SPI机制详解
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="什么是Java-SPI"><a href="#什么是Java-SPI" class="headerlink" title="什么是Java SPI"></a>什么是Java SPI</h2><p>SPI（Service Provider Interface）机制是Java提供的一种服务发现机制，它允许第三方为某个接口创建实现，并将实现放在classpath下的META-INF/services目录中，由接口的提供方在运行时动态加载实现。</p>
+<a id="more"></a>
+<p>SPI机制的实现步骤如下：</p>
+<ol>
+<li><p>定义接口：首先需要定义一个接口，该接口的实现类将会被动态加载。</p>
+</li>
+<li><p>创建实现类：然后需要创建实现该接口的类，该类需要实现该接口的所有方法。</p>
+</li>
+<li><p>创建服务配置文件：在resources目录下创建/META-INF/services/接口全限定名的文件，文件中填写实现类的全限定名。</p>
+</li>
+<li><p>加载实现类：在运行时，通过ServiceLoader.load(接口类型)方法加载实现类。</p>
+</li>
+<li><p>调用实现类：通过迭代器遍历获取到的实现类，调用实现类的方法。</p>
+</li>
+</ol>
+<p>示例代码如下：</p>
+<ol>
+<li>定义服务接口</li>
+</ol>
+<p>首先需要定义一个服务接口，该接口定义了一组服务接口方法，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.创建服务提供者</p>
+<p>接下来需要创建一个或多个服务提供者，实现上述服务接口，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServiceImpl1</span> <span class="keyword">implements</span> <span class="title">MyService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"MyServiceImpl1 doSomething"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServiceImpl2</span> <span class="keyword">implements</span> <span class="title">MyService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"MyServiceImpl2 doSomething"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.创建服务提供者配置文件</p>
+<p>在classpath下创建一个名为 <code>META-INF/services</code> 的目录，在该目录下创建一个以服务接口全限定名为文件名的文件，例如：<code>META-INF/services/com.example.MyService</code>，文件内容为服务提供者的全限定名，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">com.example.MyServiceImpl1</span><br><span class="line">com.example.MyServiceImpl2</span><br></pre></td></tr></table></figure>
+
+<p>4.加载服务提供者</p>
+<p>使用 <code>ServiceLoader</code> 类加载服务提供者，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;MyService&gt; loader = ServiceLoader.load(MyService<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>5.使用服务提供者</p>
+<p>使用 <code>ServiceLoader</code> 类的 <code>iterator()</code> 方法获取服务提供者的迭代器，然后遍历迭代器获取服务提供者的实例，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (MyService myService : loader) &#123;</span><br><span class="line">    myService.doSomething();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会依次输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyServiceImpl1 doSomething</span><br><span class="line">MyServiceImpl2 doSomething</span><br></pre></td></tr></table></figure>
+
+<p>说明两个服务提供者都被成功加载并执行。</p>
+<p>需要注意的是，SPI机制要求服务接口和服务提供者实现类都必须是公共的，并且服务提供者的实现类必须有一个无参构造函数。</p>
+<h2 id="JDK中的SPI使用"><a href="#JDK中的SPI使用" class="headerlink" title="JDK中的SPI使用"></a>JDK中的SPI使用</h2><p>JDK中有很多地方使用了SPI，以下是一些例子：</p>
+<ol>
+<li><p>JDBC驱动：JDBC规范定义了一种SPI机制，允许开发人员编写自己的JDBC驱动程序。JDBC驱动程序必须实现java.sql.Driver接口，同时还需要在META-INF/services目录下提供一个名为java.sql.Driver的文件，文件内容为该驱动程序的实现类名。</p>
+</li>
+<li><p>日志框架：JDK自带的日志框架java.util.logging也使用了SPI机制。开发人员可以通过实现java.util.logging.Handler接口来自定义日志输出方式，然后在META-INF/services目录下提供一个名为java.util.logging.Handler的文件，文件内容为该自定义Handler的实现类名。</p>
+</li>
+<li><p>XML解析器：JDK自带的XML解析器javax.xml.parsers.DocumentBuilderFactory也使用了SPI机制。开发人员可以通过实现javax.xml.parsers.DocumentBuilderFactory接口来自定义XML解析器，然后在META-INF/services目录下提供一个名为javax.xml.parsers.DocumentBuilderFactory的文件，文件内容为该自定义解析器的实现类名。</p>
+</li>
+<li><p>Servlet容器：Servlet规范也定义了一种SPI机制，允许开发人员编写自己的Servlet容器。开发人员可以通过实现javax.servlet.ServletContainerInitializer接口来自定义Servlet容器，然后在META-INF/services目录下提供一个名为javax.servlet.ServletContainerInitializer的文件，文件内容为该自定义容器的实现类名。</p>
+</li>
+<li><p>Java NIO中的SelectorProvider：SelectorProvider是一个抽象类，用于提供Selector的实现。在Java NIO中，可以通过SelectorProvider.provider()方法获取系统默认的SelectorProvider实例。不同的操作系统平台会提供不同的SelectorProvider实现，因此SelectorProvider的具体实现类是通过SPI机制加载的。</p>
+</li>
+</ol>
+<h2 id="JAVA-SPI的底层实现原理"><a href="#JAVA-SPI的底层实现原理" class="headerlink" title="JAVA SPI的底层实现原理"></a>JAVA SPI的底层实现原理</h2><p>在JDK中，Java SPI的实现方式主要是通过<code>ServiceLoader</code>类实现的。它是一个用于加载服务实现类的工具类，它的实现方式主要包括以下几个方面：</p>
+<ol>
+<li><p>根据接口名称从META-INF/services目录下加载配置文件。</p>
+</li>
+<li><p>解析配置文件，获取实现类的全限定名。</p>
+</li>
+<li><p>使用反射机制创建实现类的实例。</p>
+</li>
+<li><p>将实例缓存起来，避免重复创建。</p>
+</li>
+</ol>
+<p>下面我们来详细介绍一下这个实现方式：</p>
+<ol>
+<li>根据接口名称从META-INF/services目录下加载配置文件。</li>
+</ol>
+<p>在Java SPI机制中，每个服务提供者都必须提供一个配置文件，该配置文件的名称为“接口全限定名”，位于META-INF/services目录下。例如，如果我们要使用JDBC的Driver接口，那么对应的配置文件就是META-INF/services/java.sql.Driver。</p>
+<p>2.解析配置文件，获取实现类的全限定名。</p>
+<p>在解析配置文件时，ServiceLoader类会读取该文件的每一行，每行内容为一个实现类的全限定名。例如，如果我们要使用JDBC的Driver接口，那么对应的配置文件内容可能如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">com.mysql.jdbc.Driver</span><br><span class="line">org.postgresql.Driver</span><br></pre></td></tr></table></figure>
+
+<p>3.使用反射机制创建实现类的实例。</p>
+<p>在获取到实现类的全限定名后，ServiceLoader类会使用反射机制创建该实现类的实例。</p>
+<p>4.将实例缓存起来，避免重复创建。</p>
+<p>为了避免重复创建实例，ServiceLoader类会将创建的实例缓存起来，下次再需要该实例时，直接返回缓存中的实例。</p>
+<p>总的来说，Java SPI机制的实现方式比较简单，主要是通过配置文件和反射机制来实现的。它的优点是可以动态替换实现类，缺点是无法对实现类进行版本管理。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/">JAVA SPI机制详解</a></p>
+        <!-- <p><span>文章作者:</span><a href="/" title="回到主页">panxt</a></p> -->
+        <p><span>文章作者:</span><a href="/blog/" title="回到主页">panxt</a></p>
+        <p><span>发布时间:</span>2023-03-13, 21:59:14</p>
+        <p><span>最后更新:</span>2023-03-13, 21:59:14</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/" title="JAVA SPI机制详解">https://panxt.github.io/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://panxt.github.io/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/　　作者: panxt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">
+                    Graylog源码解析(2)-告警模块详解
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/blog/2023/03/13/Google-Guice%E5%92%8CSpring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%BC%82%E5%90%8C%E7%82%B9/">
+                    Google Guice和Spring的使用和异同点
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是Java-SPI"><span class="toc-number">1.</span> <span class="toc-text">什么是Java SPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK中的SPI使用"><span class="toc-number">2.</span> <span class="toc-text">JDK中的SPI使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA-SPI的底层实现原理"><span class="toc-number">3.</span> <span class="toc-text">JAVA SPI的底层实现原理</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"JAVA SPI机制详解　| panxt's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MDIyMy8yNjcxMw==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/" title="上一篇: Graylog源码解析(2)-告警模块详解">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/blog/2023/03/13/Google-Guice%E5%92%8CSpring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%BC%82%E5%90%8C%E7%82%B9/" title="下一篇: Google Guice和Spring的使用和异同点">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">Graylog源码解析(2)-告警模块详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/">JAVA SPI机制详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/13/Google-Guice%E5%92%8CSpring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%BC%82%E5%90%8C%E7%82%B9/">Google Guice和Spring的使用和异同点</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">设计模式:工厂模式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">Graylog源码解析(1)-任务调度模块详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3_bak/">Graylog源码解析(1)-任务调度模块详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/">Java本地化适配过程中字符导致报错</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">拉取github代码，在已配置ssh密钥，仍需要输入密码--如何处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">rsa host key for github.com has changed and you have requested strict checking.--如何处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/06/01/maven-%E6%8F%92%E4%BB%B6%E7%AF%87-maven-shade-plugin/">maven-插件篇:maven-shade-plugin</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/">GitHub远程仓库拉取代码合并到本地分支</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/24/2020-05-24-%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%B0%E7%8A%B6%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">2020-05-24 对当前现状一些想法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/24/ElasticSearch%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2/">ElasticSearch中如何进行时间范围查询</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/">Hexo使用和使用travis自动部署</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018-2023 panxt
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/blog/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/blog//background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"> -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
