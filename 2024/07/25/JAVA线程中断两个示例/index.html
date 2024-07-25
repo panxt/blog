@@ -14,16 +14,15 @@
 <meta name="author" content="panxt" />
 
 
-    
-    
 
-
-<meta name="description" content="just so so">
-<meta property="og:type" content="website">
-<meta property="og:title" content="panxt&#39;s blog">
-<meta property="og:url" content="https://panxt.github.io/blog/index.html">
+<meta name="description" content="线程中断1. 线程中断线程中断是指当一个线程正在运行时，另一个线程可以调用该线程的interrupt()方法来中断该线程的执行。当线程被中断时，该线程会抛出一个InterruptedException异常，该异常可以被捕获或者处理。 2. 线程中断示例2.1 线程中断实例1123456789101112131415161718192021222324252627282930313233343536">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA线程中断两个示例">
+<meta property="og:url" content="https://panxt.github.io/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/index.html">
 <meta property="og:site_name" content="panxt&#39;s blog">
-<meta property="og:description" content="just so so">
+<meta property="og:description" content="线程中断1. 线程中断线程中断是指当一个线程正在运行时，另一个线程可以调用该线程的interrupt()方法来中断该线程的执行。当线程被中断时，该线程会抛出一个InterruptedException异常，该异常可以被捕获或者处理。 2. 线程中断示例2.1 线程中断实例1123456789101112131415161718192021222324252627282930313233343536">
+<meta property="article:published_time" content="2024-07-25T21:59:14.000Z">
+<meta property="article:modified_time" content="+022024-07-25T21:59:14.000Z">
 <meta property="article:author" content="panxt">
 <meta property="article:tag" content="java ">
 <meta property="article:tag" content="scala ">
@@ -58,13 +57,11 @@
 
 
 
-    <style> .article { opacity: 0;} </style>
-
 
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>panxt&#39;s blog</title>
+<title>JAVA线程中断两个示例 | panxt&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -73,8 +70,8 @@
     var yiliaConfig = {
         fancybox: true,
         animate: true,
-        isHome: true,
-        isPost: false,
+        isHome: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -280,9 +277,7 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-JAVA线程中断两个示例" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-JAVA线程中断两个示例" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/" class="article-date">
@@ -300,12 +295,19 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/">JAVA线程中断两个示例</a>
+    <h1 class="article-title" itemprop="name">
+      JAVA线程中断两个示例
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -324,616 +326,140 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
   
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Graylog源码解析-2-告警模块详解" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/" class="article-date">
-      <time datetime="2023-08-13T19:37:45.000Z" itemprop="datePublished">2023-08-13</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">Graylog源码解析(2)-告警模块详解</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <a id="more"></a>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-JAVA-SPI机制详解" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/" class="article-date">
-      <time datetime="2023-03-13T21:59:14.000Z" itemprop="datePublished">2023-03-13</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/">JAVA SPI机制详解</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="什么是Java-SPI"><a href="#什么是Java-SPI" class="headerlink" title="什么是Java SPI"></a>什么是Java SPI</h2><p>SPI（Service Provider Interface）机制是Java提供的一种服务发现机制，它允许第三方为某个接口创建实现，并将实现放在classpath下的META-INF/services目录中，由接口的提供方在运行时动态加载实现。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/#more">阅读全文 >></a>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/">JAVA线程中断两个示例</a></p>
+        <!-- <p><span>文章作者:</span><a href="/" title="回到主页">panxt</a></p> -->
+        <p><span>文章作者:</span><a href="/blog/" title="回到主页">panxt</a></p>
+        <p><span>发布时间:</span>2024-07-25, 21:59:14</p>
+        <p><span>最后更新:</span>22024-07-25, 21:59:14</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/" title="JAVA线程中断两个示例">https://panxt.github.io/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://panxt.github.io/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/　　作者: panxt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Google-Guice和Spring的使用和异同点" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/03/13/Google-Guice%E5%92%8CSpring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%BC%82%E5%90%8C%E7%82%B9/" class="article-date">
-      <time datetime="2023-03-13T21:14:23.000Z" itemprop="datePublished">2023-03-13</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/03/13/Google-Guice%E5%92%8CSpring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%BC%82%E5%90%8C%E7%82%B9/">Google Guice和Spring的使用和异同点</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="Google-Guice介绍"><a href="#Google-Guice介绍" class="headerlink" title="Google Guice介绍"></a>Google Guice介绍</h2><p>Google Guice 是一个开源的依赖注入框架，它能够帮助开发者更方便地管理应用程序中的对象依赖关系，从而使得代码更加易于测试、维护和扩展。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/03/13/Google-Guice%E5%92%8CSpring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%BC%82%E5%90%8C%E7%82%B9/#more">阅读全文 >></a>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
-      
-      <div class="clearfix"></div>
     </div>
-    
-  </div>
-  
-</article>
 
 
 
-
-
-
-
-
-
-  
-    <article id="post-设计模式-工厂模式" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/03/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="article-date">
-      <time datetime="2023-03-06T22:54:34.000Z" itemprop="datePublished">2023-03-06</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+    <nav id="article-nav">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/03/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">设计模式:工厂模式</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>工厂模式通常分为三类：简单工厂模式、工厂方法模式和抽象工厂模式。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" rel="tag">工厂模式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/03/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Graylog源码解析-1-任务调度模块详解" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/" class="article-date">
-      <time datetime="2023-03-06T21:49:46.000Z" itemprop="datePublished">2023-03-06</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">Graylog源码解析(1)-任务调度模块详解</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>告警模块是SIEM产品中重要的模块，下文将在源码层面解析在Graylog中实现此模块的任务调度模块的实现细节。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/Graylog/">Graylog</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Graylog/" rel="tag">Graylog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E5%91%8A%E8%AD%A6/" rel="tag">告警</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Graylog源码解析-1-任务调度模块详解_bak" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3_bak/" class="article-date">
-      <time datetime="2023-03-06T21:49:46.000Z" itemprop="datePublished">2023-03-06</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">
+                    Graylog源码解析(2)-告警模块详解
+                </a>
+            </div>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3_bak/">Graylog源码解析(1)-任务调度模块详解</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>告警模块是SIEM产品中重要的模块，下文将在源码层面解析在Graylog中实现此模块的任务调度模块的实现细节。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/Graylog/">Graylog</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Graylog/" rel="tag">Graylog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E5%91%8A%E8%AD%A6/" rel="tag">告警</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3_bak/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Java本地化适配过程中字符导致报错" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/" class="article-date">
-      <time datetime="2023-02-22T09:50:39.000Z" itemprop="datePublished">2023-02-22</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/">Java本地化适配过程中字符导致报错</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>起因在公司测试环境中部署项目服务时，启动服务报错：can’t find bundle for base name message, locale en_US</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/BUG/" rel="tag">BUG</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/" rel="tag">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-拉取github代码，在已配置ssh密钥，仍需要输入密码-如何处理" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/" class="article-date">
-      <time datetime="2023-02-05T16:21:52.000Z" itemprop="datePublished">2023-02-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">拉取github代码，在已配置ssh密钥，仍需要输入密码--如何处理</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="拉取github代码，在已配置ssh密钥，仍需要输入密码"><a href="#拉取github代码，在已配置ssh密钥，仍需要输入密码" class="headerlink" title="拉取github代码，在已配置ssh密钥，仍需要输入密码"></a>拉取github代码，在已配置ssh密钥，仍需要输入密码</h1>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/ssh/">ssh</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/github/" rel="tag">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ssh/" rel="tag">ssh</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-如何处理" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/" class="article-date">
-      <time datetime="2023-02-05T16:03:29.000Z" itemprop="datePublished">2023-02-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">rsa host key for github.com has changed and you have requested strict checking.--如何处理</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="github拉取代码时遇到的一些问题"><a href="#github拉取代码时遇到的一些问题" class="headerlink" title="github拉取代码时遇到的一些问题"></a>github拉取代码时遇到的一些问题</h1><p>git pull时报错：rsa host key for github.com has changed and you have requested strict checking.</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/bug/">bug</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/bug/" rel="tag">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/github/" rel="tag">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ssh/" rel="tag">ssh</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="extend next" rel="next" href="/blog/page/2/">Next &amp;raquo;</a>
     </nav>
+
   
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程中断"><span class="toc-number">1.</span> <span class="toc-text">线程中断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-线程中断"><span class="toc-number">1.1.</span> <span class="toc-text">1. 线程中断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-线程中断示例"><span class="toc-number">1.2.</span> <span class="toc-text">2. 线程中断示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-线程中断实例1"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 线程中断实例1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#执行结果"><span class="toc-number">1.2.2.</span> <span class="toc-text">执行结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-线程中断实例1-1"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.1 线程中断实例1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#执行结果-1"><span class="toc-number">1.2.4.</span> <span class="toc-text">执行结果</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"JAVA线程中断两个示例　| panxt's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MDIyMy8yNjcxMw==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <!-- <a href="/" title="回到主页"><i class="fa fa-home"></i></a> -->
+            <a href="/blog/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/" title="下一篇: Graylog源码解析(2)-告警模块详解">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2024/07/25/JAVA%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%A4%BA%E4%BE%8B/">JAVA线程中断两个示例</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/08/13/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2-%E5%91%8A%E8%AD%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">Graylog源码解析(2)-告警模块详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/13/JAVA-SPI%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/">JAVA SPI机制详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/13/Google-Guice%E5%92%8CSpring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%BC%82%E5%90%8C%E7%82%B9/">Google Guice和Spring的使用和异同点</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">设计模式:工厂模式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/">Graylog源码解析(1)-任务调度模块详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/03/06/Graylog%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3_bak/">Graylog源码解析(1)-任务调度模块详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/22/Java%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AD%97%E7%AC%A6%E5%AF%BC%E8%87%B4%E6%8A%A5%E9%94%99/">Java本地化适配过程中字符导致报错</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/05/%E6%8B%89%E5%8F%96github%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%9C%A8%E5%B7%B2%E9%85%8D%E7%BD%AEssh%E5%AF%86%E9%92%A5%EF%BC%8C%E4%BB%8D%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">拉取github代码，在已配置ssh密钥，仍需要输入密码--如何处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2023/02/05/rsa-host-key-for-github-com-has-changed-and-you-have-requested-strict-checking-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86/">rsa host key for github.com has changed and you have requested strict checking.--如何处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/06/01/maven-%E6%8F%92%E4%BB%B6%E7%AF%87-maven-shade-plugin/">maven-插件篇:maven-shade-plugin</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/26/GitHub%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF/">GitHub远程仓库拉取代码合并到本地分支</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/24/2020-05-24-%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%B0%E7%8A%B6%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">2020-05-24 对当前现状一些想法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/24/ElasticSearch%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2/">ElasticSearch中如何进行时间范围查询</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/05/23/Hexo%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BD%BF%E7%94%A8travis%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/">Hexo使用和使用travis自动部署</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
@@ -987,10 +513,6 @@
         })
     </script>
 
-
-    
-
-     
 
 
 
