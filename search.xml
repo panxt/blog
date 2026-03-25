@@ -155,11 +155,11 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> Graylog </tag>
             
             <tag> 告警 </tag>
+            
+            <tag> java </tag>
             
         </tags>
       
@@ -211,9 +211,9 @@
       
         <tags>
             
-            <tag> github </tag>
-            
             <tag> ssh </tag>
+            
+            <tag> github </tag>
             
             <tag> git </tag>
             
@@ -240,11 +240,11 @@
       
         <tags>
             
-            <tag> github </tag>
+            <tag> bug </tag>
             
             <tag> ssh </tag>
             
-            <tag> bug </tag>
+            <tag> github </tag>
             
         </tags>
       
