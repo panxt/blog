@@ -1,7 +1,5 @@
 ---
-title: >-
-  rsa host key for github.com has changed and you have requested strict
-  checking.--如何处理
+title: GitHub 拉取代码时报 rsa host key has changed 如何处理
 date: 2023-02-05 16:03:29
 updated: 2023-02-05 16:03:29
 tags:

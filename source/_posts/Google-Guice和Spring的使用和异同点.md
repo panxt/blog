@@ -3,7 +3,13 @@ title: Google Guice和Spring的使用和异同点
 date: 2023-03-13 21:14:23
 updated: 2023-03-13 21:14:23
 tags:
+    - Java
+    - Spring
+    - Guice
+    - DI
+    - IoC
 categories:
+    - [Java]
 comments:
 ---
 

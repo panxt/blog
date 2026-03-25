@@ -1,12 +1,16 @@
 ---
 title: JAVA线程中断两个示例
 date: 2024-07-25 21:59:14
-updated: 22024-07-25 21:59:14
+updated: 2024-07-25 21:59:14
 tags:
+    - Java
+    - 并发
+    - 线程
+    - interrupt
 categories:
+    - [Java]
 comments:
 ---
-
 ## 线程中断
 
 ### 1. 线程中断

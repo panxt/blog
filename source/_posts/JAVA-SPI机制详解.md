@@ -3,7 +3,11 @@ title: JAVA SPI机制详解
 date: 2023-03-13 21:59:14
 updated: 2023-03-13 21:59:14
 tags:
+    - Java
+    - SPI
+    - ServiceLoader
 categories:
+    - [Java]
 comments:
 ---
 

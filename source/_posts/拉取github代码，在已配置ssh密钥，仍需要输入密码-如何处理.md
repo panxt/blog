@@ -1,12 +1,13 @@
 ---
-title: 拉取github代码，在已配置ssh密钥，仍需要输入密码--如何处理
+title: 拉取 GitHub 代码时，已配置 SSH 密钥仍需要输入密码如何处理
 date: 2023-02-05 16:21:52
 updated: 2023-02-05 16:21:52
 tags:
     - github
     - ssh
+    - git
 categories:
-    - [ssh]
+    - [Git]
 comments:
 ---
 # 拉取github代码，在已配置ssh密钥，仍需要输入密码
