@@ -1,10 +1,20 @@
 $ErrorActionPreference = "Stop"
 
 $requiredVersion = "16.20.2"
+$originalVersion = $null
+
+function Get-CurrentNodeVersion {
+    $current = (& node -v) 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $current) {
+        return $null
+    }
+
+    return $current.TrimStart("v")
+}
 
 function Ensure-NodeVersion {
-    $current = (& node -v) 2>$null
-    if ($LASTEXITCODE -eq 0 -and $current -eq "v$requiredVersion") {
+    $script:originalVersion = Get-CurrentNodeVersion
+    if ($originalVersion -eq $requiredVersion) {
         return
     }
 
@@ -25,5 +35,12 @@ if ($args.Count -eq 0) {
     throw "Usage: powershell -File tools/hexo-node16.ps1 <hexo args>"
 }
 
-& cmd /c "node_modules\\.bin\\hexo.cmd $($args -join ' ')"
-exit $LASTEXITCODE
+try {
+    & cmd /c "node_modules\\.bin\\hexo.cmd $($args -join ' ')"
+    exit $LASTEXITCODE
+}
+finally {
+    if ($originalVersion -and $originalVersion -ne $requiredVersion) {
+        & nvm use $originalVersion | Out-Host
+    }
+}
