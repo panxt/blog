@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "hexo generate",
-    "clean": "hexo clean",
-    "deploy": "hexo deploy",
-    "server": "hexo server"
+    "build": "powershell -ExecutionPolicy Bypass -File tools/hexo-node16.ps1 generate",
+    "clean": "powershell -ExecutionPolicy Bypass -File tools/hexo-node16.ps1 clean",
+    "deploy": "powershell -ExecutionPolicy Bypass -File tools/publish.ps1",
+    "server": "powershell -ExecutionPolicy Bypass -File tools/hexo-node16.ps1 server",
+    "preview": "powershell -ExecutionPolicy Bypass -File tools/hexo-node16.ps1 server --port 4000 --host 127.0.0.1"
   },
   "hexo": {
     "version": "4.2.1"
